@@ -2,10 +2,15 @@ import { faBars, faClose, faPenClip } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import debounce from "../../util/debound";
+import { GetProfile, IsLogin } from "../../app/reducer/userSlice";
+import Auth from "../auth/auth.component";
 
 function Header() {
   const [isToggleMenu, setIsToggleMenu] = useState(false);
+  const isLogin = useSelector(IsLogin);
+  const profile = useSelector(GetProfile);
   const container = useRef();
 
   const toggleMenuHandle = () => {
@@ -62,7 +67,7 @@ function Header() {
             >
               <FontAwesomeIcon icon={faClose} size="2x"></FontAwesomeIcon>
             </button>
-            <div className="text-white font-bold font-mono rounded-xl mx-2 border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0">
+            <div className="text-white font-bold font-mono rounded-xl border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0 sm:mx-2">
               <Link
                 to="/"
                 className="flex items-center bg-gradient-to-r from-orange-500 to-orange-400 px-3 py-2 hover:from-orange-400 hover:to-orange-500"
@@ -71,7 +76,7 @@ function Header() {
                 <h1 className="ml-2">Viết Riviu</h1>
               </Link>
             </div>
-            <div className="text-white font-bold font-mono rounded-xl mx-2 border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0">
+            <div className="text-white font-bold font-mono rounded-xl border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0 sm:mx-2">
               <Link
                 to="/"
                 className="bg-gradient-to-r from-orange-500 to-orange-400 px-3 py-2 block hover:from-orange-400 hover:to-orange-500"
@@ -79,7 +84,7 @@ function Header() {
                 <h1>Thêm địa điểm</h1>
               </Link>
             </div>
-            <div className="text-white font-bold font-mono rounded-xl ml-2 border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0">
+            <div className="text-white font-bold font-mono rounded-xl border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0 sm:hidden sm:mx-2 md:block">
               <Link
                 to="/"
                 className="bg-gradient-to-r from-orange-500 to-orange-400 px-3 py-2 block hover:from-orange-400 hover:to-orange-500"
@@ -87,6 +92,17 @@ function Header() {
                 <h1>Liên hệ</h1>
               </Link>
             </div>
+            {isLogin ? (
+              <div className="w-10 h-10 rounded-full overflow-hidden">
+                <img
+                  src={profile.avatar}
+                  className="w-full h-full object-cover"
+                  alt="avatar"
+                />
+              </div>
+            ) : (
+              <Auth></Auth>
+            )}
           </div>
           <button
             className="my-auto text-orange-500 sm:hidden"

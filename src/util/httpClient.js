@@ -22,9 +22,13 @@ export default class HttpClient {
 
 async function fetchWithoutData(url, setLoading, method) {
   const instance = request[method].bind(request); //tạo instance để có thể gọi lại api khi bị lỗi 401 ở hàm check lỗi
+  setLoading(true);
   const res = await instance(url);
   if (res.code >= 200 && res.code < 300) {
     setLoading(false);
+    if (res.message) {
+      toast.success(res.message);
+    }
     return res;
   }
   if (res.code >= 400 && res.code < 600) {
@@ -34,6 +38,7 @@ async function fetchWithoutData(url, setLoading, method) {
 
 async function fetchWithData(url, setLoading, method, data) {
   const instance = request[method].bind(request);
+  setLoading(true);
   const res = await instance(url, data && data, {
     headers: {
       "Content-Type": "multipart/form-data", //tất cả các method trừ get, delete fai set contentType nếu có dữ liệu đẩy lên server
@@ -41,6 +46,9 @@ async function fetchWithData(url, setLoading, method, data) {
   });
   if (res.code >= 200 && res.code < 300) {
     setLoading(false);
+    if (res.message) {
+      toast.success(res.message);
+    }
     return res;
   }
   if (res.code >= 400 && res.code < 600) {

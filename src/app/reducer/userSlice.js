@@ -20,7 +20,7 @@ export const userSlice = createSlice({
   },
 });
 export const { login, logout } = userSlice.actions;
-export const isLogin = (state) => state.user.login;
-export const getProfile = (state) => state.user.profile;
+export const IsLogin = (state) => state.user.login;
+export const GetProfile = (state) => state.user.profile;
 
 export default userSlice.reducer;
