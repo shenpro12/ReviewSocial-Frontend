@@ -67,6 +67,16 @@ function Header() {
             >
               <FontAwesomeIcon icon={faClose} size="2x"></FontAwesomeIcon>
             </button>
+            {isLogin && (
+              <div className="text-white font-bold font-mono rounded-xl border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0 sm:hidden sm:mx-2">
+                <Link
+                  to="/"
+                  className="bg-gradient-to-r from-orange-500 to-orange-400 px-3 py-2 block hover:from-orange-400 hover:to-orange-500"
+                >
+                  <h1>Thông tin tài khoản</h1>
+                </Link>
+              </div>
+            )}
             <div className="text-white font-bold font-mono rounded-xl border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0 sm:mx-2">
               <Link
                 to="/"
@@ -93,7 +103,7 @@ function Header() {
               </Link>
             </div>
             {isLogin ? (
-              <div className="w-10 h-10 rounded-full overflow-hidden">
+              <div className="absolute top-14 sm:relative sm:top-0 sm:w-10 w-20 h-20 sm:ml-2 sm:h-10 rounded-full overflow-hidden">
                 <img
                   src={profile.avatar}
                   className="w-full h-full object-cover"
@@ -102,6 +112,16 @@ function Header() {
               </div>
             ) : (
               <Auth></Auth>
+            )}
+            {isLogin && (
+              <div className="text-white font-bold font-mono rounded-xl border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0 sm:hidden sm:mx-2">
+                <Link
+                  to="/"
+                  className="bg-gradient-to-r from-orange-500 to-orange-400 px-3 py-2 block hover:from-orange-400 hover:to-orange-500"
+                >
+                  <h1>Đăng xuất</h1>
+                </Link>
+              </div>
             )}
           </div>
           <button

@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import validator from "validator";
 import { toast } from "react-toastify";
-import debounce from "../../util/debound";
 import HttpClient from "../../util/httpClient";
 import FormData from "form-data";
 import RequestLoading from "../app-loading/requestLoading.component";
@@ -19,7 +18,7 @@ function SignIn({ onSelect }) {
 
   const dispatch = useDispatch();
 
-  const signinHandle = debounce(async () => {
+  const signinHandle = async () => {
     if (!userName || !password) {
       toast.error("Vui lòng nhập đầy đủ thông tin!");
       return;
@@ -37,7 +36,7 @@ function SignIn({ onSelect }) {
 
     const user = await HttpClient.get("UserProfile", setLoading);
     dispatch(login(user.data));
-  });
+  };
   return (
     <div className="w-full h-full p-3 flex flex-col items-center justify-center">
       {loading && <RequestLoading></RequestLoading>}
@@ -49,7 +48,10 @@ function SignIn({ onSelect }) {
           <input
             placeholder="Tên đăng nhập"
             className="text-lg w-full bg-transparent outline-none"
-            onInput={(e) => setUserName(e.target.value)}
+            onInput={(e) => {
+              console.log(e);
+              setUserName(e.target.value);
+            }}
           />
         </div>
         <div className="py-3 flex items-center w-full sm:w-4/6 bg-neutral-400/10 px-6 border border-black/10 rounded-full my-2 focus-within:border-orange-500 duration-200">

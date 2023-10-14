@@ -38,13 +38,8 @@ function App() {
       />
       <AppLoading loading={loading} />
       <Header />
-      <div className="w-full h-screen bg-neutral-400/10">
-        <div className="container mx-auto px-3 xl:max-w-4xl">
-          <Outlet />
-        </div>
-      </div>
-      <div className="w-full h-screen bg-neutral-400/10">
-        <div className="container mx-auto px-3 xl:max-w-4xl">
+      <div className="w-full bg-neutral-200/10">
+        <div className="container mx-auto px-3 xl:max-w-6xl py-10">
           <Outlet />
         </div>
       </div>

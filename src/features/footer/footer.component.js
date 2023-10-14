@@ -32,7 +32,7 @@ function Footer() {
     };
   }, []);
   return (
-    <div className="w-full mt-14 px-3 pb-6 md:px-0 relative">
+    <div className="w-full mt-14 px-3 pb-6 md:px-0 relative border-t-2 border-neutral-200/50 pt-5">
       <button
         ref={goTopBtn}
         className="bg-white animate-bounce hidden fixed right-5 bottom-5 w-10 h-10 rounded-full justify-center items-center border border-orange-500/50 text-orange-500 duration-200 hover:bg-orange-500 hover:text-white"

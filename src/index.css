@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.swiper-button-next,
+.swiper-button-prev {
+  display: none !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-family: "Font Awesome\ 6 free" !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+}
+.swiper-button-next::after {
+  content: "\f105" !important;
+}
+.swiper-button-prev::after {
+  content: "\f104" !important;
+}
+@media (min-width: 768px) {
+  .mySlider:hover .swiper-button-prev,
+  .mySlider:hover .swiper-button-next {
+    margin-top: -15px;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 100% !important;
+    border: 2px solid rgb(255, 255, 255) !important;
+    height: 35px !important;
+    width: 35px !important;
+    background-color: white !important;
+    color: black !important;
+  }
+}
