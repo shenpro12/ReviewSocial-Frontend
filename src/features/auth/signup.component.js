@@ -36,7 +36,10 @@ function SignUp({ onSelect }) {
     formData.append("userName", userName);
     formData.append("email", email);
     formData.append("password", password);
-    await HttpClient.post("auth/signup", setLoading, formData);
+    await HttpClient.post("auth/signup", setLoading, formData, () => {
+      toast.success("Đăng ký thành công!");
+      onSelect("signin");
+    });
   };
   return (
     <div className="w-full h-full p-3 flex flex-col items-center justify-center">

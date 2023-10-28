@@ -14,7 +14,7 @@ function ProvinCategory() {
   useEffect(() => {
     (async () => {
       const data = await HttpClient.get("ProvinceCategory/getall", () => {});
-      setItems(data.data);
+      setItems(data);
     })();
   }, []);
 

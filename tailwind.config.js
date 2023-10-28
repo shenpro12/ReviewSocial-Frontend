@@ -13,6 +13,12 @@ module.exports = {
           "100%": { transform: "translateY(0%)" },
         },
       },
+      width: {
+        "475px": "475px",
+      },
+      height: {
+        "475px": "475px",
+      },
     },
   },
   plugins: [],

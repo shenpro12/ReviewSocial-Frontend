@@ -24,9 +24,8 @@ request.interceptors.request.use(function (config) {
 request.interceptors.response.use(
   function (response) {
     return {
-      data: response.data.data,
-      message: response.data.messageText,
-      code: response.data.statusCode,
+      data: response.data,
+      code: response.status,
     };
   },
   function (err) {

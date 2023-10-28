@@ -3,40 +3,38 @@ import request from "./request";
 import { getToken } from "./request";
 
 export default class HttpClient {
-  static async get(url, setLoading) {
-    return await fetchWithoutData(url, setLoading, "get");
+  static async get(url, setLoading, callBack) {
+    return await fetchWithoutData(url, setLoading, "get", callBack);
   }
-  static async delete(url, setLoading) {
-    return await fetchWithoutData(url, setLoading, "delete");
+  static async delete(url, setLoading, callBack) {
+    return await fetchWithoutData(url, setLoading, "delete", callBack);
   }
-  static async post(url, setLoading, data) {
-    return await fetchWithData(url, setLoading, "post", data);
+  static async post(url, setLoading, data, callBack) {
+    return await fetchWithData(url, setLoading, "post", data, callBack);
   }
-  static async put(url, setLoading, data) {
-    return await fetchWithData(url, setLoading, "put", data);
+  static async put(url, setLoading, data, callBack) {
+    return await fetchWithData(url, setLoading, "put", data, callBack);
   }
-  static async patch(url, setLoading, data) {
-    return await fetchWithData(url, setLoading, "patch", data);
+  static async patch(url, setLoading, data, callBack) {
+    return await fetchWithData(url, setLoading, "patch", data, callBack);
   }
 }
 
-async function fetchWithoutData(url, setLoading, method) {
+async function fetchWithoutData(url, setLoading, method, callBack) {
   const instance = request[method].bind(request); //tạo instance để có thể gọi lại api khi bị lỗi 401 ở hàm check lỗi
   setLoading(true);
   const res = await instance(url);
   if (res.code >= 200 && res.code < 300) {
     setLoading(false);
-    if (res.message) {
-      toast.success(res.message);
-    }
-    return res;
+    callBack && callBack();
+    return res.data;
   }
   if (res.code >= 400 && res.code < 600) {
     return await errHandle(res, instance, url, setLoading);
   }
 }
 
-async function fetchWithData(url, setLoading, method, data) {
+async function fetchWithData(url, setLoading, method, data, callBack) {
   const instance = request[method].bind(request);
   setLoading(true);
   const res = await instance(url, data && data, {
@@ -46,10 +44,8 @@ async function fetchWithData(url, setLoading, method, data) {
   });
   if (res.code >= 200 && res.code < 300) {
     setLoading(false);
-    if (res.message) {
-      toast.success(res.message);
-    }
-    return res;
+    callBack && callBack();
+    return res.data;
   }
   if (res.code >= 400 && res.code < 600) {
     return await errHandle(res, instance, url, setLoading, data && data);

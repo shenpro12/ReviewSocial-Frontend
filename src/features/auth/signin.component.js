@@ -32,10 +32,10 @@ function SignIn({ onSelect }) {
     formData.append("password", password);
     const token = await HttpClient.post("auth/signin", setLoading, formData);
 
-    window.localStorage.setItem("token", JSON.stringify(token.data));
+    window.localStorage.setItem("token", JSON.stringify(token));
 
     const user = await HttpClient.get("UserProfile", setLoading);
-    dispatch(login(user.data));
+    dispatch(login(user));
   };
   return (
     <div className="w-full h-full p-3 flex flex-col items-center justify-center">
@@ -49,7 +49,6 @@ function SignIn({ onSelect }) {
             placeholder="Tên đăng nhập"
             className="text-lg w-full bg-transparent outline-none"
             onInput={(e) => {
-              console.log(e);
               setUserName(e.target.value);
             }}
           />

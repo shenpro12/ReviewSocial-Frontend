@@ -13,7 +13,7 @@ function Home() {
         </div>
         <ProvinCategory></ProvinCategory>
       </div>
-      <div className="w-3/12 bg-indigo-500"></div>
+      <div className="w-3/12"></div>
     </div>
   );
 }

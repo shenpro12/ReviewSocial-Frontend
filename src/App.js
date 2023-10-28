@@ -13,6 +13,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { useDispatch } from "react-redux";
 import { login } from "./app/reducer/userSlice";
+import { addListProvince } from "./app/reducer/provinceSlice";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -21,7 +22,10 @@ function App() {
   useEffect(() => {
     (async () => {
       const user = await HttpClient.get("UserProfile", setLoading);
-      dispatch(login(user.data));
+      user && dispatch(login(user));
+      const province = await HttpClient.get("province/getall", setLoading);
+
+      dispatch(addListProvince(province));
     })();
   }, []);
 
@@ -37,13 +41,17 @@ function App() {
         progressClassName={"Toastify__progress-bar"}
       />
       <AppLoading loading={loading} />
-      <Header />
-      <div className="w-full bg-neutral-200/10">
-        <div className="container mx-auto px-3 xl:max-w-6xl py-10">
-          <Outlet />
-        </div>
-      </div>
-      <Footer />
+      {!loading && (
+        <>
+          <Header />
+          <div className="w-full bg-neutral-200/10">
+            <div className="container mx-auto px-3 xl:max-w-6xl py-10">
+              <Outlet />
+            </div>
+          </div>
+          <Footer />
+        </>
+      )}
     </>
   );
 }
