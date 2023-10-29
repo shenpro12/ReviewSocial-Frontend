@@ -49,21 +49,23 @@ function Header() {
       ref={container}
     >
       <div className="container mx-auto xl:max-w-6xl">
-        <div className="flex justify-between">
-          <Link to="/">
-            <img
-              src="https://res.cloudinary.com/dbey8svpl/image/upload/v1696128651/logo_wmnuov.png"
-              className="w-24 h-12"
-              alt="logo"
-            />
-          </Link>
-          <div className="flex">
+        <div className="flex">
+          <div className="w-24 h-12 relative">
+            <Link to="/">
+              <img
+                src="https://res.cloudinary.com/dbey8svpl/image/upload/v1696128651/logo_wmnuov.png"
+                alt="logo"
+                className="2-full h-full"
+              />
+            </Link>
+          </div>
+          <div className="flex flex-1 justify-end">
             <Search></Search>
-            <div className="flex">
+            <div className="flex z-0">
               <div
                 className={`${
                   isToggleMenu ? "-left-0" : "-left-full"
-                } flex items-center justify-center flex-col text-sm fixed bg-white top-0 left-0 bottom-0 w-full z-40 duration-500 sm:flex-row sm:justify-between sm:bg-white sm:relative sm:w-max sm:-left-0`}
+                } flex items-center justify-center flex-col text-sm fixed bg-white top-0 left-0 bottom-0 w-full duration-500 sm:flex-row sm:justify-between sm:bg-white sm:relative sm:w-max sm:-left-0`}
               >
                 <button
                   className="text-orange-500 absolute top-4 right-4 sm:hidden duration-300 hover:text-orange-500/70"
@@ -82,7 +84,7 @@ function Header() {
                   </div>
                 )}
                 {isLogin && (
-                  <div className="text-white font-bold font-mono rounded-xl border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0 sm:mx-2">
+                  <div className="text-white font-bold font-mono rounded-xl border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0 sm:mr-2">
                     <Link
                       to="/"
                       className="flex items-center bg-gradient-to-r from-orange-500 to-orange-400 px-3 py-2 hover:from-orange-400 hover:to-orange-500"

@@ -13,7 +13,7 @@ export const provinceSlice = createSlice({
       state.provinces = action.payload;
     },
     changeProvince: (state, action) => {
-      if (state.currProvinceId != action.payload) {
+      if (state.currProvinceId !== action.payload) {
         state.currProvinceId = action.payload;
       }
     },
