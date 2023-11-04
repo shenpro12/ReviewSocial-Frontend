@@ -7,16 +7,22 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import HttpClient from "../../util/httpClient";
+import { useSelector } from "react-redux";
+import { getCurrProvince } from "../../app/reducer/provinceSlice";
 
 function ProvinCategory() {
   const [items, setItems] = useState([]);
+  const currProvince = useSelector(getCurrProvince);
 
   useEffect(() => {
     (async () => {
-      const data = await HttpClient.get("ProvinceCategory/getall", () => {});
+      const data = await HttpClient.get(
+        `ProvinceCategory/getByProvince/${currProvince.id}`,
+        () => {}
+      );
       setItems(data);
     })();
-  }, []);
+  }, [currProvince]);
 
   return (
     <div className="w-full mt-10">
@@ -25,7 +31,7 @@ function ProvinCategory() {
           Dành cho bạn
         </h1>
         <Link
-          to={"/"}
+          to={`/danh-muc/${currProvince.id}`}
           className=" text-neutral-500 hover:text-black duration-150"
         >
           Xem thêm

@@ -229,7 +229,7 @@ function Search() {
               "Vui chơi",
             ].map((i) => (
               <li className=" px-2 mb-3 font-semibold text-black/50 duration-150 hover:text-orange-500 hover:cursor-pointer">
-                <Link>{i}</Link>
+                <Link to={`/${i}`}>{i}</Link>
               </li>
             ))}
           </ul>
