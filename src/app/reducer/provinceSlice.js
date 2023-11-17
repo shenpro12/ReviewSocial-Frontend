@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  currProvinceId: "aac1af63-28ab-4f29-8c43-b5ba5860210c",
+  currProvinceId: "6d71f6f0-a4cd-4f98-aa85-33ad8ffaa25a",
   provinces: [],
 };
 
@@ -21,8 +21,10 @@ export const provinceSlice = createSlice({
 });
 export const { addListProvince, changeProvince } = provinceSlice.actions;
 export const getCurrProvince = (state) => {
-  return state.province.provinces.find(
-    (province) => province.id === state.province.currProvinceId
+  return (
+    state.province.provinces.find(
+      (province) => province.id === state.province.currProvinceId
+    ) || { name: "Hồ Chí Minh", id: "6d71f6f0-a4cd-4f98-aa85-33ad8ffaa25a" }
   );
 };
 

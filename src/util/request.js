@@ -1,6 +1,6 @@
 import axios from "axios";
 const request = axios.create({
-  baseURL: "https://localhost:7041/api/",
+  baseURL: "http://halumandotnet-001-site1.ctempurl.com/api/",
   withCredentials: true,
 });
 
@@ -30,7 +30,7 @@ request.interceptors.response.use(
   },
   function (err) {
     return {
-      code: err.response.status,
+      code: err.status,
     };
   }
 );

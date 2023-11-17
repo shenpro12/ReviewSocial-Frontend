@@ -22,10 +22,10 @@ export default class HttpClient {
 
 async function fetchWithoutData(url, setLoading, method, callBack) {
   const instance = request[method].bind(request); //tạo instance để có thể gọi lại api khi bị lỗi 401 ở hàm check lỗi
-  setLoading(true);
+  setLoading && setLoading(true);
   const res = await instance(url);
   if (res.code >= 200 && res.code < 300) {
-    setLoading(false);
+    setLoading && setLoading(false);
     callBack && callBack();
     return res.data;
   }
@@ -36,14 +36,14 @@ async function fetchWithoutData(url, setLoading, method, callBack) {
 
 async function fetchWithData(url, setLoading, method, data, callBack) {
   const instance = request[method].bind(request);
-  setLoading(true);
+  setLoading && setLoading(true);
   const res = await instance(url, data && data, {
     headers: {
       "Content-Type": "multipart/form-data", //tất cả các method trừ get, delete fai set contentType nếu có dữ liệu đẩy lên server
     },
   });
   if (res.code >= 200 && res.code < 300) {
-    setLoading(false);
+    setLoading && setLoading(false);
     callBack && callBack();
     return res.data;
   }
@@ -56,7 +56,7 @@ async function errHandle(res, instance, url, setLoading, data) {
   if (res.code === 400) {
     //các lỗi khi fetch thành công nhưng mà code là 400
     toast.error(res.message);
-    setLoading(false);
+    setLoading && setLoading(false);
   } else if (res.code === 401) {
     //xử lý lỗi auth
     //lấy token hiện tại
@@ -76,7 +76,7 @@ async function errHandle(res, instance, url, setLoading, data) {
       if (refeshInfo.code >= 400 && refeshInfo.code < 600) {
         toast.error("Hết phiên đăng nhập!");
         window.localStorage.removeItem("token");
-        setLoading(false);
+        setLoading && setLoading(false);
         return;
       }
       //nếu lấy thành công thì set token mới vào bộ nhớ
@@ -92,14 +92,14 @@ async function errHandle(res, instance, url, setLoading, data) {
             "Content-Type": "multipart/form-data",
           },
         });
-        setLoading(false);
+        setLoading && setLoading(false);
         return reFetchData;
       }
     }
-    setLoading(false);
+    setLoading && setLoading(false);
   } else {
     //các lỗi khác
     toast.error("Có gì đó không đúng! Vui lòng thử lại!");
-    setLoading(false);
+    setLoading && setLoading(false);
   }
 }

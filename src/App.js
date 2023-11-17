@@ -24,7 +24,6 @@ function App() {
       const user = await HttpClient.get("UserProfile", setLoading);
       user && dispatch(login(user));
       const province = await HttpClient.get("province/getall", setLoading);
-
       dispatch(addListProvince(province));
     })();
   }, []);

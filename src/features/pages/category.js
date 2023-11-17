@@ -25,7 +25,7 @@ function Category() {
         setLoading,
         () => {}
       );
-      setData([...res, ...res, ...res]);
+      setData(res);
     })();
   }, [params]);
 
