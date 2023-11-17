@@ -1,6 +1,6 @@
 import axios from "axios";
 const request = axios.create({
-  baseURL: "http://halumandotnet-001-site1.ctempurl.com/api/",
+  baseURL: "https://localhost:7041/api/",
   withCredentials: true,
 });
 
