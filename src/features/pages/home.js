@@ -18,6 +18,11 @@ function Home() {
       </div>
       <div className="lg:w-3/12 lg:block hidden ">
         <SideAuth></SideAuth>
+        <img
+          className="mt-8 rounded-xl"
+          src="https://res.cloudinary.com/dbey8svpl/image/upload/v1700293554/701c4f418e5d1bb0b278aea50296c568_fijyf7.gif"
+          alt="gif"
+        />
       </div>
     </div>
   );
