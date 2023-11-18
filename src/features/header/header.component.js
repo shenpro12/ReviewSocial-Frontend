@@ -61,7 +61,7 @@ function Header() {
           </div>
           <div className="flex flex-1 justify-end">
             <Search></Search>
-            <div className="flex z-0">
+            <div className="flex z-10">
               <div
                 className={`${
                   isToggleMenu ? "-left-0" : "-left-full"

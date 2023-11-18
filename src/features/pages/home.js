@@ -1,4 +1,6 @@
-import ProvinCategory from "../provinceCategory/provinceCategory";
+import SideAuth from "../auth/sideAuth.component";
+import CategoryHeader from "../provinceCategory/categoryHeader.component";
+import ProvinCategory from "../provinceCategory/provinceCategory.component";
 
 function Home() {
   return (
@@ -12,8 +14,11 @@ function Home() {
           />
         </div>
         <ProvinCategory></ProvinCategory>
+        <CategoryHeader></CategoryHeader>
       </div>
-      <div className="lg:w-3/12 lg:block hidden h-96 bg-orange-400"></div>
+      <div className="lg:w-3/12 lg:block hidden ">
+        <SideAuth></SideAuth>
+      </div>
     </div>
   );
 }
