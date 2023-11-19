@@ -3,6 +3,7 @@ import App from "../App";
 import Home from "../features/pages/home";
 import Category from "../features/pages/category";
 import NotFound from "../features/error/notFound.component";
+import Contact from "../features/pages/contact";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,12 @@ const router = createBrowserRouter([
         errorElement: <NotFound />,
       },
       {
-        path: "/danh-muc/:provinceID",
+        path: "/lien-he",
+        element: <Contact />,
+        errorElement: <NotFound />,
+      },
+      {
+        path: "/danh-muc",
         element: <Category />,
         errorElement: <NotFound />,
       },

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import HttpClient from "../../util/httpClient";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import RequestLoading from "../app-loading/requestLoading.component";
 import { useSelector } from "react-redux";
 import { getCurrProvince } from "../../app/reducer/provinceSlice";
@@ -9,25 +9,18 @@ function Category() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const currProvince = useSelector(getCurrProvince);
-  const params = useParams();
-  const navigate = useNavigate();
 
-  // thay doi url
-  useEffect(() => {
-    navigate(`/danh-muc/${currProvince.id}`);
-  }, [currProvince]);
-
-  // de goi API
+  //goi API
   useEffect(() => {
     (async () => {
       const res = await HttpClient.get(
-        `ProvinceCategory/getByProvince/${params.provinceID}`,
+        `ProvinceCategory/getByProvince/${currProvince.id}`,
         setLoading,
         () => {}
       );
       setData(res);
     })();
-  }, [params]);
+  }, [currProvince]);
 
   return (
     <>
@@ -43,6 +36,7 @@ function Category() {
                 <img
                   className="w-full h-full object-cover hover:scale-150 duration-1000"
                   src={`https://res.cloudinary.com/dbey8svpl/image/upload/v1696060296/${i.thumb}.jpg`}
+                  alt="category thumb"
                 />
               </div>
               <h1 className="px-3 py-2 font-bold h-1/6 truncate">{i.name}</h1>

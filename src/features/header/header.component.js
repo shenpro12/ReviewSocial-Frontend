@@ -106,7 +106,7 @@ function Header() {
                 )}
                 <div className="text-white font-bold font-mono rounded-xl border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0 sm:hidden sm:mx-2 lg:block">
                   <Link
-                    to="/"
+                    to="/lien-he"
                     className="bg-gradient-to-r from-orange-500 to-orange-400 px-3 py-2 block hover:from-orange-400 hover:to-orange-500"
                   >
                     <h1>Liên hệ</h1>

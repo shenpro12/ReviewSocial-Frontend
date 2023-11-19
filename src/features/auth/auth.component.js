@@ -4,9 +4,11 @@ import { useContext } from "react";
 import { AppContext } from "../../App";
 import { useEffect } from "react";
 import PublisherEventName from "../../constants/publisherEventName";
+import { useParams } from "react-router-dom";
 
 function Auth() {
   const [toggleModal, setToggleModal] = useState(false);
+  const params = useParams();
   const _context = useContext(AppContext);
 
   const toggleModalHandle = () => {
@@ -29,7 +31,11 @@ function Auth() {
 
   return (
     <>
-      <div className="text-white font-bold font-mono rounded-xl border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0 sm:ml-2 lg:hidden">
+      <div
+        className={`text-white font-bold font-mono rounded-xl border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0 sm:ml-2 ${
+          window.location.pathname === "/" ? "lg:hidden" : ""
+        }`}
+      >
         <button
           className="bg-gradient-to-r from-orange-500 to-orange-400 px-3 py-2 block hover:from-orange-400 hover:to-orange-500"
           onClick={toggleModalHandle}
