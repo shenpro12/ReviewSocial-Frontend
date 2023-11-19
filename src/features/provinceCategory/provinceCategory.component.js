@@ -27,9 +27,7 @@ function ProvinCategory() {
   return (
     <div className="w-full mt-10 z-0">
       <header className="w-full flex justify-between items-center">
-        <h1 className=" text-2xl font-semibold text-neutral-500">
-          Dành cho bạn
-        </h1>
+        <h1 className=" text-2xl font-semibold">Dành cho bạn</h1>
         <Link
           to={`/danh-muc/${currProvince.id}`}
           className=" text-neutral-500 hover:text-black duration-150"

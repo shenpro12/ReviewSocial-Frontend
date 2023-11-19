@@ -84,7 +84,7 @@ function SignIn({ onSelect }) {
             Quên mật khẩu?
           </p>
         </div>
-        <div className="text-white text-lg w-full sm:w-4/6 mt-7 flex justify-center font-bold font-mono bg-zinc-300/10 overflow-hidden my-3">
+        <div className="text-white text-lg w-full sm:w-4/6 mt-7 flex justify-center font-bold font-mono overflow-hidden my-3">
           <button
             className="w-2/4 text-center rounded-xl items-center bg-gradient-to-r from-orange-500 to-orange-400 px-3 py-2 hover:from-orange-400 hover:to-orange-500"
             onClick={signinHandle}
@@ -92,7 +92,7 @@ function SignIn({ onSelect }) {
             Đăng nhập
           </button>
         </div>
-        <div className="text-orange-500 text-lg w-full sm:w-4/6 mt-1 flex justify-center font-bold bg-zinc-300/10 overflow-hidden my-3">
+        <div className="text-orange-500 text-lg w-full sm:w-4/6 mt-1 flex justify-center font-bold overflow-hidden my-3">
           <button
             className=" w-max text-center rounded-xl items-center px-3 py-2"
             onClick={() => onSelect("signup")}

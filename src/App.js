@@ -14,6 +14,10 @@ import "@fontsource/roboto/700.css";
 import { useDispatch } from "react-redux";
 import { login } from "./app/reducer/userSlice";
 import { addListProvince } from "./app/reducer/provinceSlice";
+import { createContext } from "react";
+import Publisher from "./contexts/publisher";
+
+export const AppContext = createContext();
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -29,7 +33,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <AppContext.Provider value={{ publisher: new Publisher() }}>
       <ToastContainer
         position="bottom-left"
         pauseOnHover
@@ -43,7 +47,7 @@ function App() {
       {!loading && (
         <>
           <Header />
-          <div className="w-full bg-neutral-200/10">
+          <div className="w-full bg-neutral-200/30">
             <div className="container mx-auto px-3 xl:max-w-6xl py-10">
               <Outlet />
             </div>
@@ -51,7 +55,7 @@ function App() {
           <Footer />
         </>
       )}
-    </>
+    </AppContext.Provider>
   );
 }
 

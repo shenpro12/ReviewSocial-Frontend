@@ -23,18 +23,19 @@ function CategoryHeader() {
   return (
     <div className="w-full mt-10">
       <div>
-        <h1 className="font-semibold text-2xl">Khám phá</h1>
+        <h1 className="font-semibold text-2xl ">Khám phá</h1>
       </div>
       <div>
         <ul className="flex mt-5 flex-wrap">
           {items.length
             ? items.map((i) => (
                 <li
-                  className={`text-xl px-4 py-2 ${
-                    i.id == currCategory
-                      ? "bg-neutral-200 text-black"
-                      : "text-black/40"
-                  } rounded-2xl hover:text-black font-semibold hover:cursor-pointer `}
+                  key={i.id}
+                  className={`text-lg px-4 py-2 ${
+                    i.id === currCategory
+                      ? "bg-neutral-200/70 text-orange-500"
+                      : "text-black/40 hover:text-black"
+                  } rounded-2xl font-semibold hover:cursor-pointer`}
                   onClick={() => changecurrCategoryHandle(i.id)}
                 >
                   {i.name}

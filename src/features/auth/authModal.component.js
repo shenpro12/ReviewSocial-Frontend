@@ -9,6 +9,7 @@ function AuthModal({ onClose }) {
   const changeActivateTab = (tab) => {
     setActivateTab(tab);
   };
+
   return (
     <div
       className="fixed top-0 px-10 right-0 bottom-0 left-0 z-50 bg-black/70 flex justify-center items-center"
