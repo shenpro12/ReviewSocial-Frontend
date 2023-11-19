@@ -24,7 +24,7 @@ function SignUp({ onSelect }) {
       toast.error("UserName không hợp lệ!");
       return;
     }
-    if (!validator.isLength(password, { min: 6 })) {
+    if (!validator.isLength(password, { min: 8 })) {
       toast.error("Password không hợp lệ!");
       return;
     }
