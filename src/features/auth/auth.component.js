@@ -3,6 +3,7 @@ import AuthModal from "./authModal.component";
 import { useContext } from "react";
 import { AppContext } from "../../App";
 import { useEffect } from "react";
+import PublisherEventName from "../../constants/publisherEventName";
 
 function Auth() {
   const [toggleModal, setToggleModal] = useState(false);
@@ -15,10 +16,14 @@ function Auth() {
   useEffect(() => {
     const toggleHandler = () => {
       setToggleModal(!toggleModal);
-    };
-    _context.publisher.subcribe("toggleModal", toggleHandler);
+    }; //handler xử lý khi sự kiện được kích hoạt, phải khai báo theo kiểu này mới có thể hủy lắng nghe sự kiện
+    _context.publisher.subcribe(PublisherEventName.ToggleModal, toggleHandler); //đăng ký nhận thông báo khi sự kiện toggleModal được phát ở các component khác
     return () => {
-      _context.publisher.unSubcribe("toggleModal", toggleHandler);
+      // bắt buộc phải hủy đăng ký sự kiện khi component destroy. hạn chế memory leak
+      _context.publisher.unSubcribe(
+        PublisherEventName.ToggleModal,
+        toggleHandler
+      );
     };
   }, []);
 

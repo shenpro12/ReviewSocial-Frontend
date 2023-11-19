@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { AppContext } from "../../App";
+import PublisherEventName from "../../constants/publisherEventName";
 
 function SideAuth() {
   const _context = useContext(AppContext);
 
   const toggleAuthHandle = () => {
-    _context.publisher.emit("toggleModal");
+    _context.publisher.emit(PublisherEventName.ToggleModal);
   };
   return (
     <div className="w-full bg-white rounded-2xl p-4">
