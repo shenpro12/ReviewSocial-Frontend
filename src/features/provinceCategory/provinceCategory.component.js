@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { getCurrProvince } from "../../app/reducer/provinceSlice";
 
 function ProvinCategory() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState();
   const currProvince = useSelector(getCurrProvince);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function ProvinCategory() {
     })();
   }, [currProvince]);
 
-  return (
+  return items && items.items && items.items.length ? (
     <div className="w-full mt-10 z-0">
       <header className="w-full flex justify-between items-center">
         <h1 className=" text-2xl font-semibold">Dành cho bạn</h1>
@@ -56,8 +56,8 @@ function ProvinCategory() {
             }}
             className="h-full mySlider"
           >
-            {items.length
-              ? items.map((i) => (
+            {items && items.items
+              ? items.items.map((i) => (
                   <SwiperSlide
                     key={i.id}
                     className=" bg-red-400 h-full rounded-xl overflow-hidden"
@@ -85,6 +85,8 @@ function ProvinCategory() {
         </div>
       </div>
     </div>
+  ) : (
+    ""
   );
 }
 export default ProvinCategory;

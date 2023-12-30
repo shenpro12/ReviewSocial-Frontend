@@ -1,14 +1,51 @@
 import { useContext } from "react";
 import { AppContext } from "../../App";
 import PublisherEventName from "../../constants/publisherEventName";
+import { useSelector } from "react-redux";
+import { GetProfile } from "../../app/reducer/userSlice";
 
 function SideAuth() {
   const _context = useContext(AppContext);
+  const profile = useSelector(GetProfile);
 
   const toggleAuthHandle = () => {
     _context.publisher.emit(PublisherEventName.ToggleModal);
   };
-  return (
+  return profile ? (
+    <div className="p-4 bg-white rounded-xl shadow-sm">
+      <div className="flex border-b pb-4 mb-2">
+        <div className="w-20 h-20 rounded-full overflow-hidden">
+          <img
+            src={profile.avatar}
+            alt="avatar"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="flex items-start flex-col justify-center pl-3">
+          <div>
+            <h1 className=" font-semibold text-lg">{profile.name}</h1>
+          </div>
+          <div>
+            <p className="text-black/50 font-semibold">{profile.identify}</p>
+          </div>
+        </div>
+      </div>
+      <div className="flex ">
+        <div className=" flex-1 text-center">
+          <h1 className="font-semibold text-lg mb-1">1</h1>
+          <p className="text-black/50 text-sm font-semibold">Posts</p>
+        </div>
+        <div className=" flex-1 text-center">
+          <h1 className="font-semibold text-lg mb-1">1</h1>
+          <p className="text-black/50 text-sm font-semibold">Followers</p>
+        </div>
+        <div className=" flex-1 text-center">
+          <h1 className="font-semibold text-lg mb-1">1</h1>
+          <p className="text-black/50 text-sm font-semibold">Followings</p>
+        </div>
+      </div>
+    </div>
+  ) : (
     <div className="w-full bg-white rounded-2xl p-4">
       <img
         className="mx-auto mb-3"

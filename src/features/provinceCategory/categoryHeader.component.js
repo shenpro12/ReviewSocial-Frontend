@@ -31,9 +31,9 @@ function CategoryHeader() {
             ? items.map((i) => (
                 <li
                   key={i.id}
-                  className={`text-lg px-4 py-2 ${
+                  className={`text-normal px-4 py-1 ${
                     i.id === currCategory
-                      ? "bg-neutral-200/70 text-orange-500"
+                      ? "bg-neutral-200/50 text-orange-500"
                       : "text-black/40 hover:text-black"
                   } rounded-2xl font-semibold hover:cursor-pointer`}
                   onClick={() => changecurrCategoryHandle(i.id)}
