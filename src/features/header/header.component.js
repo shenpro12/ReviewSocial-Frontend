@@ -2,17 +2,23 @@ import { faBars, faClose, faPenClip } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import debounce from "../../util/debound";
-import { GetProfile, IsLogin } from "../../app/reducer/userSlice";
+import { GetProfile, IsLogin, logout } from "../../app/reducer/userSlice";
 import Auth from "../auth/auth.component";
 import Search from "./search.component";
+import { LogOutService } from "../../core/services/auth.service";
 
 function Header() {
   const [isToggleMenu, setIsToggleMenu] = useState(false);
   const isLogin = useSelector(IsLogin);
   const profile = useSelector(GetProfile);
+  const dispatch = useDispatch();
   const container = useRef();
+  const settingsImage = useRef();
+  const settingsMenu = useRef();
+
+  const [togleSettings, setTogleSettings] = useState(false);
 
   const toggleMenuHandle = () => {
     setIsToggleMenu(!isToggleMenu);
@@ -34,12 +40,32 @@ function Header() {
     }
   };
 
+  const logOutHandle = () => {
+    LogOutService();
+    dispatch(logout());
+  };
+
   useEffect(() => {
     toggleHeaderHandle();
     const scrollCallback = debounce(toggleHeaderHandle);
     document.addEventListener("scroll", scrollCallback);
     return () => {
       document.removeEventListener("scroll", scrollCallback);
+    };
+  }, []);
+
+  useEffect(() => {
+    const documentClickHandle = (e) => {
+      if (
+        e.target != settingsImage.current &&
+        e.target != settingsMenu.current
+      ) {
+        setTogleSettings(false);
+      }
+    };
+    document.addEventListener("click", documentClickHandle);
+    return () => {
+      document.removeEventListener("click", documentClickHandle);
     };
   }, []);
 
@@ -113,24 +139,33 @@ function Header() {
                   </Link>
                 </div>
                 {isLogin ? (
-                  <div className="absolute top-14 sm:relative sm:top-0 sm:w-10 w-20 h-20 sm:ml-2 sm:h-10 rounded-full overflow-hidden">
-                    <img
-                      src={profile.avatar}
-                      className="w-full h-full object-cover"
-                      alt="avatar"
-                    />
+                  <div className="absolute top-14 sm:relative sm:top-0 sm:w-10 w-20 h-20 sm:ml-2 sm:h-10">
+                    <section
+                      className="w-full h-full rounded-full overflow-hidden"
+                      onClick={() => setTogleSettings(!togleSettings)}
+                    >
+                      <img
+                        ref={settingsImage}
+                        src={profile.avatar}
+                        className="w-full h-full object-cover"
+                        alt="avatar"
+                      />
+                    </section>
+                    <div
+                      ref={settingsMenu}
+                      className={`absolute bg-red-500 ${
+                        togleSettings ? "h-10 w-44 p-5" : "h-0 w-0 p-0"
+                      } right-0 top-12 shadow-md rounded duration-200`}
+                    ></div>
                   </div>
                 ) : (
                   <Auth></Auth>
                 )}
                 {isLogin && (
                   <div className="text-white font-bold font-mono rounded-xl border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0 sm:hidden sm:mx-2">
-                    <Link
-                      to="/"
-                      className="bg-gradient-to-r from-orange-500 to-orange-400 px-3 py-2 block hover:from-orange-400 hover:to-orange-500"
-                    >
-                      <h1>Đăng xuất</h1>
-                    </Link>
+                    <div className="bg-gradient-to-r from-orange-500 to-orange-400 px-3 py-2 block hover:from-orange-400 hover:to-orange-500">
+                      <button onClick={logOutHandle}>Đăng xuất</button>
+                    </div>
                   </div>
                 )}
               </div>

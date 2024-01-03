@@ -1,17 +1,22 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../../App";
 import PublisherEventName from "../../constants/publisherEventName";
 import { useSelector } from "react-redux";
-import { GetProfile } from "../../app/reducer/userSlice";
+import { GetProfile, IsLogin } from "../../app/reducer/userSlice";
 
 function SideAuth() {
   const _context = useContext(AppContext);
   const profile = useSelector(GetProfile);
+  const isLogin = useSelector(IsLogin);
+
+  useEffect(() => {
+    console.log();
+  });
 
   const toggleAuthHandle = () => {
     _context.publisher.emit(PublisherEventName.ToggleModal);
   };
-  return profile ? (
+  return isLogin ? (
     <div className="p-4 bg-white rounded-xl shadow-sm">
       <div className="flex border-b pb-4 mb-2">
         <div className="w-20 h-20 rounded-full overflow-hidden">
