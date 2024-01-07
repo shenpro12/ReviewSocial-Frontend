@@ -1,7 +1,7 @@
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import validator from "validator";
 import { toast } from "react-toastify";
 import HttpClient from "../../util/httpClient";
@@ -9,6 +9,7 @@ import FormData from "form-data";
 import RequestLoading from "../app-loading/requestLoading.component";
 import { useDispatch } from "react-redux";
 import { login } from "../../app/reducer/userSlice";
+import { $ } from "../../constants/getElement.const";
 
 function SignIn({ onSelect }) {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -37,6 +38,18 @@ function SignIn({ onSelect }) {
     const user = await HttpClient.get("UserProfile", setLoading);
     dispatch(login(user));
   };
+
+  useEffect(() => {
+    const keyDownHandle = (e) => {
+      if (e.code === "Enter") {
+        $("loginBtn").click();
+      }
+    };
+    document.addEventListener("keydown", keyDownHandle);
+    return () => {
+      document.removeEventListener("keydown", keyDownHandle);
+    };
+  }, []);
   return (
     <div className="w-full h-full p-3 flex flex-col items-center justify-center">
       {loading && <RequestLoading></RequestLoading>}
@@ -86,6 +99,7 @@ function SignIn({ onSelect }) {
         </div>
         <div className="text-white text-lg w-full sm:w-4/6 mt-7 flex justify-center font-bold font-mono overflow-hidden my-3">
           <button
+            id="loginBtn"
             className="w-2/4 text-center rounded-xl items-center bg-gradient-to-r from-orange-500 to-orange-400 px-3 py-2 hover:from-orange-400 hover:to-orange-500"
             onClick={signinHandle}
           >

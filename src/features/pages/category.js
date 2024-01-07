@@ -23,6 +23,10 @@ function Category() {
     })();
   }, [currProvince]);
 
+  useEffect(() => {
+    document.title = `Danh mục | ${currProvince.name}`;
+  }, [currProvince]);
+
   return (
     <>
       {loading && <RequestLoading></RequestLoading>}
@@ -31,16 +35,18 @@ function Category() {
           <BreadCrumd
             Items={[{ text: data && data.categorySlug }]}
           ></BreadCrumd>
-          <div className="mb-7 bg-white shadow-sm rounded-xl overflow-hidden">
-            <img
-              src={data && data.categoryThumb}
-              alt="categoryThumb"
-              className="w-full h-96 object-cover"
-            />
-            <h1 className="text-center py-2 font-semibold text-black/60 text-xl">
-              {data && data.categorySlug}
-            </h1>
-          </div>
+          {data && data.items && (
+            <div className="mb-7 bg-white shadow-sm rounded-xl overflow-hidden">
+              <img
+                src={data && data.categoryThumb}
+                alt="categoryThumb"
+                className="w-full h-96 object-cover"
+              />
+              <h1 className="text-center py-2 font-semibold text-black/60 text-xl">
+                {data && data.categorySlug}
+              </h1>
+            </div>
+          )}
           <div className="grid gap-5 grid-cols-1 sm:grid-cols-2">
             {data &&
               data.items &&

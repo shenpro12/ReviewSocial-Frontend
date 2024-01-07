@@ -1,4 +1,9 @@
+import { useEffect } from "react";
+
 function Contact() {
+  useEffect(() => {
+    document.title = "Liên hệ";
+  }, []);
   return (
     <div className="w-full bg-white rounded-2xl px-5 py-8">
       <h1 className="text-center text-3xl font-semibold font-mono mb-10">

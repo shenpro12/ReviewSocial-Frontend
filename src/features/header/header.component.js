@@ -58,7 +58,8 @@ function Header() {
     const documentClickHandle = (e) => {
       if (
         e.target != settingsImage.current &&
-        e.target != settingsMenu.current
+        e.target != settingsMenu.current &&
+        settingsMenu
       ) {
         setTogleSettings(false);
       }
@@ -112,7 +113,7 @@ function Header() {
                 {isLogin && (
                   <div className="text-white font-bold font-mono rounded-xl border-4 bg-zinc-300/10 overflow-hidden my-3 sm:my-0 sm:mr-2">
                     <Link
-                      to="/"
+                      to="/create-post"
                       className="flex items-center bg-gradient-to-r from-orange-500 to-orange-400 px-3 py-2 hover:from-orange-400 hover:to-orange-500"
                     >
                       <FontAwesomeIcon icon={faPenClip}></FontAwesomeIcon>
@@ -139,7 +140,7 @@ function Header() {
                   </Link>
                 </div>
                 {isLogin ? (
-                  <div className="absolute top-14 sm:relative sm:top-0 sm:w-10 w-20 h-20 sm:ml-2 sm:h-10">
+                  <div className="absolute top-14 sm:relative sm:top-0 sm:w-10 w-20 h-20 sm:ml-2 sm:h-10 hover:cursor-pointer">
                     <section
                       className="w-full h-full rounded-full overflow-hidden"
                       onClick={() => setTogleSettings(!togleSettings)}
@@ -153,10 +154,27 @@ function Header() {
                     </section>
                     <div
                       ref={settingsMenu}
-                      className={`absolute bg-red-500 ${
-                        togleSettings ? "h-10 w-44 p-5" : "h-0 w-0 p-0"
-                      } right-0 top-12 shadow-md rounded duration-200`}
-                    ></div>
+                      className={`absolute bg-white ${
+                        togleSettings ? " h-max w-max" : "h-0 w-0 p-0"
+                      } right-0 top-12 shadow-md rounded duration-200 overflow-hidden`}
+                    >
+                      <ul>
+                        <li className="py-2 px-4 hover:bg-slate-300/10 hover:text-orange-500 duration-200">
+                          <Link to="/">Thông tin tài khoản</Link>
+                        </li>
+                        <li className="py-2 px-4 hover:bg-slate-300/10 hover:text-orange-500 duration-200">
+                          <Link to="/">Địa điểm đã lưu</Link>
+                        </li>
+                        <li className="py-2 px-4 hover:bg-slate-300/10 hover:text-orange-500 duration-200">
+                          <Link to="/">Bài viết đã lưu</Link>
+                        </li>
+                        <li className="py-2 px-4 hover:bg-slate-300/10 hover:text-orange-500 duration-200">
+                          <button onClick={() => logOutHandle()}>
+                            Đăng xuất
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 ) : (
                   <Auth></Auth>

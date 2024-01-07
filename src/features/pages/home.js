@@ -1,8 +1,12 @@
 import SideAuth from "../auth/sideAuth.component";
 import CategoryHeader from "../provinceCategory/categoryHeader.component";
 import ProvinCategory from "../provinceCategory/provinceCategory.component";
+import { useEffect } from "react";
 
 function Home() {
+  useEffect(() => {
+    document.title = "Trang chủ";
+  }, []);
   return (
     <div className="w-full lg:flex">
       <div className="lg:w-9/12 lg:pr-5">
