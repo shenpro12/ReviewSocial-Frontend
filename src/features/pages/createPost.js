@@ -10,6 +10,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import PostImages from "../postImages/postImages.component";
 import DestinationModal from "../destinationModal/destinationModal.component";
+import Rate from "../rate/rate.component";
+import { useSelector } from "react-redux";
+import { IsLogin } from "../../app/reducer/userSlice";
+import { useNavigate } from "react-router-dom";
+import { getCurrProvince } from "../../app/reducer/provinceSlice";
+import { toast } from "react-toastify";
 
 function CreatePost() {
   const [riviuText, setRiviuText] = useState("");
@@ -17,6 +23,10 @@ function CreatePost() {
   const [openDesModal, setOpenDesModal] = useState(false);
   const [destination, setDestination] = useState();
   const [postTitle, setPostTitle] = useState();
+  const [rate, setRate] = useState();
+  const isLogin = useSelector(IsLogin);
+  const navigate = useNavigate();
+  const currProvince = useSelector(getCurrProvince);
 
   const AddImageHandle = (e) => {
     setImages([...e.target.files]);
@@ -31,26 +41,39 @@ function CreatePost() {
     setDestination(des);
   };
 
+  const createPostHandle = () => {
+    if (postTitle && riviuText && destination && rate && currProvince) {
+    } else {
+      toast.error("Vui lòng nhập đầy đủ thông tin!");
+    }
+  };
+
   useEffect(() => {
     document.title = "Viết Riviu";
   }, []);
+
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/");
+    }
+  }, [isLogin]);
   return (
-    <div className="bg-white rounded-xl py-5 px-6">
+    <div className="bg-white rounded-xl py-7 px-6">
       <h1 className=" font-bold text-3xl font-mono text-center mb-5">
         Viết Riviu
       </h1>
       <div className="flex flex-col lg:flex-row">
-        <div className=" pr-3 w-full mb-5 lg:mb-0 lg:w-3/5 mt-5 lg:mt-0">
+        <div className=" lg:pr-6 w-full mb-5 lg:mb-0 lg:w-3/5 mt-5 lg:mt-0">
           <input
             value={postTitle}
             autoFocus={true}
             name="tieuDe"
-            className="w-full border-none outline-none text-2xl font-semibold px-4 mb-3"
-            placeholder="Tiêu đề..."
+            className="w-full outline-none text-xl font-semibold px-4 mb-3 border-2 border-black/20 py-3 rounded-xl"
+            placeholder="Tiêu đề*"
             onChange={(e) => setPostTitle(e.target.value)}
           />
           <ReactQuill
-            placeholder="bạn có  gì muốn riviu..."
+            placeholder="bạn có  gì muốn riviu*"
             formats={formats}
             modules={modules}
             style={{
@@ -97,7 +120,7 @@ function CreatePost() {
               : ""}
           </div>
         </div>
-        <div className=" h-44 lg:pl-3 w-full lg:w-2/5">
+        <div className=" lg:pl-6 w-full lg:w-2/5">
           <h1 className=" text-xl font-bold mb-3 text-black/40">Địa điểm</h1>
           {destination ? (
             <div
@@ -133,16 +156,25 @@ function CreatePost() {
               onClick={() => setOpenDesModal(true)}
             >
               <FontAwesomeIcon icon={faMapLocation}></FontAwesomeIcon>
-              <h1 className="font-semibold ml-2">Nhấn vào để chọn địa điểm</h1>
+              <h1 className="font-semibold ml-2">Nhấn vào để chọn địa điểm*</h1>
             </div>
           )}
 
-          <h1 className=" text-xl font-bold mb-3 mt-7 text-black/40">
-            Đánh giá
+          <h1 className=" text-xl font-bold mb-3 mt-7 text-black/40 border-b pb-4">
+            Đánh giá*
+          </h1>
+
+          <Rate onChangeRate={(rate) => setRate(rate)}></Rate>
+
+          <h1 className="mt-3 font-bold text-red-500 text-xs font-mono">
+            *<span className="font-normal text-black/60"> : Bắt buộc</span>
           </h1>
 
           <div className="text-right mt-7">
-            <button className=" bg-orange-400 hover:bg-orange-500 duration-150 text-white px-4 py-2 font-mono font rounded-md">
+            <button
+              className=" bg-orange-400 hover:bg-orange-500 duration-150 text-white px-4 py-2 font-mono font rounded-md"
+              onClick={createPostHandle}
+            >
               Đăng bài
             </button>
           </div>
