@@ -4,15 +4,19 @@ import debounce from "../../util/debound";
 import { useRef, useState } from "react";
 import HttpClient from "../../util/httpClient";
 import styled from "./destinationModal.module.css";
+import { useSelector } from "react-redux";
+import { getCurrProvince } from "../../app/reducer/provinceSlice";
 
 function DestinationModal({ onClose, onChooseDes }) {
   const [listDestination, setListDestination] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const search = useRef();
+  const currProvince = useSelector(getCurrProvince);
+
   const findDestinationHandle = debounce(async () => {
     if (search.current.value) {
       let res = await HttpClient.get(
-        `destination/getByKeyword?keyword=${search.current.value}`,
+        `destination/getByKeyword?keyword=${search.current.value}&provinceID=${currProvince.id}`,
         setIsLoading
       );
       setListDestination(res);
@@ -27,17 +31,17 @@ function DestinationModal({ onClose, onChooseDes }) {
     setListDestination([]);
   };
   return (
-    <div className="fixed top-0 bottom-0 left-0 right-0 bg-black/80 z-10 flex justify-center pt-20">
+    <div className="fixed top-0 bottom-0 left-0 right-0 bg-black/80 z-10 flex justify-center pt-20 px-5 md:px-0">
       <div
         className=" absolute right-5 top-4 text-white text-2xl hover:cursor-pointer"
         onClick={onClose}
       >
         <FontAwesomeIcon icon={faClose}></FontAwesomeIcon>
       </div>
-      <div className="rounded-md shadow bg-white w-2/5 h-3/5 p-7 flex flex-col">
-        <div className="flex items-center">
-          <h1 className="font-semibold mr-3">Chọn địa điểm</h1>
-          <div className="flex-1 flex py-2 px-4 bg-slate-200/30 rounded-sm items-center">
+      <div className="rounded-md shadow bg-white w-full md:w-3/5 lg:w-2/5 h-3/5 p-3 md:p-7 flex flex-col">
+        <div className="flex items-center flex-col md:flex-row px-7 md:px-0">
+          <h1 className="font-semibold mr-3 mb-3 md:mb-0">Chọn địa điểm</h1>
+          <div className="flex-1 w-full flex py-2 px-5 bg-slate-200/30 rounded-full items-center">
             <input
               autoFocus={true}
               ref={search}

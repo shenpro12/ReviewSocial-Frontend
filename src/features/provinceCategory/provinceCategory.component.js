@@ -65,7 +65,7 @@ function ProvinCategory() {
                     <div
                       className="w-full h-full"
                       style={{
-                        backgroundImage: `url(https://res.cloudinary.com/dbey8svpl/image/upload/v1696060296/${i.thumb}.jpg)`,
+                        backgroundImage: `url(${i.thumb})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                       }}

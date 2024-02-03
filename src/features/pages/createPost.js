@@ -16,17 +16,28 @@ import { IsLogin } from "../../app/reducer/userSlice";
 import { useNavigate } from "react-router-dom";
 import { getCurrProvince } from "../../app/reducer/provinceSlice";
 import { toast } from "react-toastify";
+import SelectBoxChip from "../select/select-chip/select-chip.component";
+import SelectBox from "../select/select/select.component";
+import HttpClient from "../../util/httpClient";
+import FormData from "form-data";
 
 function CreatePost() {
   const [riviuText, setRiviuText] = useState("");
-  const [images, setImages] = useState();
+  const [images, setImages] = useState([]);
   const [openDesModal, setOpenDesModal] = useState(false);
   const [destination, setDestination] = useState();
-  const [postTitle, setPostTitle] = useState();
+  const [postTitle, setPostTitle] = useState("");
   const [rate, setRate] = useState();
   const isLogin = useSelector(IsLogin);
   const navigate = useNavigate();
   const currProvince = useSelector(getCurrProvince);
+  const [provinCategory, setProvinCategory] = useState();
+  const [category, setCategory] = useState();
+
+  const [provinceCategoryData, setProvinceCategoryData] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
+
+  const [loading, setLoading] = useState(false);
 
   const AddImageHandle = (e) => {
     setImages([...e.target.files]);
@@ -41,8 +52,42 @@ function CreatePost() {
     setDestination(des);
   };
 
-  const createPostHandle = () => {
-    if (postTitle && riviuText && destination && rate && currProvince) {
+  const createPostHandle = async () => {
+    if (
+      postTitle &&
+      riviuText &&
+      destination &&
+      rate &&
+      currProvince &&
+      provinCategory
+    ) {
+      console.log(images);
+      const formData = new FormData();
+      formData.append("title", postTitle);
+      formData.append("template", riviuText);
+      formData.append("destinationID", destination.id);
+      formData.append("provinceID", currProvince.id);
+      formData.append("provinceCategoryID", provinCategory.id);
+
+      images.map((item) => {
+        formData.append("images", item);
+      });
+
+      category.map((item) => {
+        formData.append("categoryID[]", item.id);
+      });
+
+      rate.forEach((obj, index) => {
+        for (var key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            formData.append(`rate[${index}].${key}`, obj[key]);
+          }
+        }
+      });
+
+      await HttpClient.post("Post", setLoading, formData, () => {
+        toast.success("Đăng bài thành công!");
+      });
     } else {
       toast.error("Vui lòng nhập đầy đủ thông tin!");
     }
@@ -50,6 +95,23 @@ function CreatePost() {
 
   useEffect(() => {
     document.title = "Viết Riviu";
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const res = await HttpClient.get(
+        `ProvinceCategory/getByProvince/${currProvince.id}`,
+        () => {}
+      );
+      setProvinceCategoryData(res.items);
+    })();
+  }, [currProvince]);
+
+  useEffect(() => {
+    (async () => {
+      const res = await HttpClient.get(`Category/getAll`, () => {});
+      setCategoryData(res);
+    })();
   }, []);
 
   useEffect(() => {
@@ -87,7 +149,19 @@ function CreatePost() {
             value={riviuText}
             onChange={setRiviuText}
           />
-          <div className="mt-5 flex flex-wrap">
+          <SelectBox
+            items={provinceCategoryData}
+            label={`Danh mục thuộc ${currProvince.name}`}
+            require={true}
+            onChange={setProvinCategory}
+          ></SelectBox>
+          <SelectBoxChip
+            items={categoryData}
+            label={"Danh mục chung"}
+            multiple={true}
+            onChange={setCategory}
+          ></SelectBoxChip>
+          <div className="mt-3 flex flex-wrap">
             <div className="mr-3 mb-3 ">
               <label
                 title="Tải ảnh lên"
@@ -121,7 +195,9 @@ function CreatePost() {
           </div>
         </div>
         <div className=" lg:pl-6 w-full lg:w-2/5">
-          <h1 className=" text-xl font-bold mb-3 text-black/40">Địa điểm</h1>
+          <h1 className=" text-xl font-bold mb-3 text-black/40">
+            Địa điểm tại {currProvince.name}
+          </h1>
           {destination ? (
             <div
               title="Đổi địa điểm"
@@ -170,7 +246,7 @@ function CreatePost() {
             *<span className="font-normal text-black/60"> : Bắt buộc</span>
           </h1>
 
-          <div className="text-right mt-7">
+          <div className="text-center md:text-right mt-7">
             <button
               className=" bg-orange-400 hover:bg-orange-500 duration-150 text-white px-4 py-2 font-mono font rounded-md"
               onClick={createPostHandle}

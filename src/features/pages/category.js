@@ -58,7 +58,7 @@ function Category() {
                   <div className="w-full h-5/6 mb-1 overflow-hidden">
                     <img
                       className="w-full h-full object-cover hover:scale-150 duration-1000"
-                      src={`https://res.cloudinary.com/dbey8svpl/image/upload/v1696060296/${i.thumb}.jpg`}
+                      src={`${i.thumb}`}
                       alt="category thumb"
                     />
                   </div>
