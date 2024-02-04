@@ -14,6 +14,7 @@ export default function SelectBoxChip({
   multiple,
   require,
   onChange,
+  value,
 }) {
   const [data, setData] = React.useState(multiple ? [] : "");
 
@@ -21,6 +22,12 @@ export default function SelectBoxChip({
     setData(event.target.value);
     onChange(event.target.value);
   };
+
+  React.useEffect(() => {
+    if (value == null) {
+      setData(multiple ? [] : "");
+    }
+  }, [value]);
 
   return (
     <div className="my-4">

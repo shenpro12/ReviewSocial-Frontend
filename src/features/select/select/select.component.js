@@ -12,6 +12,7 @@ export default function SelectBox({
   multiple,
   require,
   onChange,
+  value,
 }) {
   const [data, setData] = React.useState(multiple ? [] : "");
 
@@ -19,6 +20,12 @@ export default function SelectBox({
     setData(event.target.value);
     onChange(event.target.value);
   };
+
+  React.useEffect(() => {
+    if (value == null) {
+      setData(multiple ? [] : "");
+    }
+  }, [value]);
 
   return (
     <div className="my-4">

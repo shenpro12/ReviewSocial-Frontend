@@ -31,8 +31,8 @@ function CreatePost() {
   const isLogin = useSelector(IsLogin);
   const navigate = useNavigate();
   const currProvince = useSelector(getCurrProvince);
-  const [provinCategory, setProvinCategory] = useState();
-  const [category, setCategory] = useState();
+  const [provinCategory, setProvinCategory] = useState(null);
+  const [category, setCategory] = useState(null);
 
   const [provinceCategoryData, setProvinceCategoryData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
@@ -105,6 +105,8 @@ function CreatePost() {
       );
       setProvinceCategoryData(res.items);
     })();
+    setCategory(null);
+    setProvinCategory(null);
   }, [currProvince]);
 
   useEffect(() => {
@@ -154,12 +156,14 @@ function CreatePost() {
             label={`Danh mục thuộc ${currProvince.name}`}
             require={true}
             onChange={setProvinCategory}
+            value={provinCategory}
           ></SelectBox>
           <SelectBoxChip
             items={categoryData}
             label={"Danh mục chung"}
             multiple={true}
             onChange={setCategory}
+            value={category}
           ></SelectBoxChip>
           <div className="mt-3 flex flex-wrap">
             <div className="mr-3 mb-3 ">

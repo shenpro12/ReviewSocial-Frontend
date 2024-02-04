@@ -2,11 +2,25 @@ import SideAuth from "../auth/sideAuth.component";
 import CategoryHeader from "../provinceCategory/categoryHeader.component";
 import ProvinCategory from "../provinceCategory/provinceCategory.component";
 import { useEffect } from "react";
+import HttpClient from "../../util/httpClient";
+import { useSelector } from "react-redux";
+import { getCurrProvince } from "../../app/reducer/provinceSlice";
 
 function Home() {
+  const currProvince = useSelector(getCurrProvince);
+
   useEffect(() => {
     document.title = "Trang chủ";
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const res = await HttpClient.get(
+        `post/getallpost?provinceID=${currProvince.id}&provinCategoryID=2d496d93-e49c-4d99-9b19-c9bacfce7dde&categoryID=3e22be04-7e04-4bb9-b512-7217bde6ac19`,
+        () => {}
+      );
+    })();
+  }, [currProvince]);
   return (
     <div className="w-full lg:flex">
       <div className="lg:w-9/12 lg:pr-5">
