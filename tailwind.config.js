@@ -19,6 +19,14 @@ module.exports = {
       height: {
         "475px": "475px",
       },
+      padding: {
+        "top-85": "85%",
+        "top-100": "100%",
+      },
+      margin: {
+        "-top-85": "-85%",
+        "-top-100": "-100%",
+      },
     },
   },
   plugins: [],
